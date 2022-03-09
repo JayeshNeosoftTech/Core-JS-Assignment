@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Core JS Assignment 1</title>
+        <style>
+            #slider{
+                width: 90%;
+                height: 500px;
+                margin-left: 5%;
+            }
+            button{
+                width: 80px;
+                height: 40px;
+                font-size: 18px;
+            }
+            #start{
+                display: inline-block;
+                margin-left: 43%;
+            }
+            #stop{
+                margin-left: 2%;
+            }
+            .error{
+                color: red;
+            }
+        </style>
+    </head>
+    <body>
+        <img id="slider" src="image1.jpg"name="imageS" />
+        <button id="start" onclick="start()">Start</button>
+        <button id="stop" onclick="stop()">Stop</button>
+        <hr>
+
+        <h2>Registration Form</h2>
+        <form action="#" onsubmit="return validateForm()" novalidate>
+        <table>
+            <tr>
+                <td><label for="fname">First Name:</label></td>
+                <td><input type="text" placeholder="first name" id="fname" onblur="valide1()"></td>
+            </tr>
+            <tr><td></td><td id="error1" class="error"></td></tr>
+            <tr>
+                <td><label for="lname">Last Name:</label></td>
+                <td><input type="text" id="lname" placeholder="last name" onblur="valide2()"></td>
+            </tr>
+            <tr><td></td><td id="error2" class="error"></td></tr>
+            <tr>
+                <td><label for="passwd">Set Password:</label></td>
+                <td><input type="password" id="passwd" name="passwd" onblur="valide3()"></td>
+            </tr>
+            <tr><td></td><td id="error3" class="error"></td></tr>
+            <tr>
+                <td><label for="email">Email ID:</label></td>
+                <td><input type="email" id="email" name="email" onblur="valide4()"></td>
+            </tr>
+            <tr><td></td><td id="error4" class="error"></td></tr>
+            <tr>
+                <td><label for="mobile">Mobile Number:</label></td>
+                <td><input type="text" id="mobile" name="mobile" min="10" max="10" pattern="[1-10]" onblur="valide5()"></td>
+            </tr>
+            <tr><td></td><td id="error5" class="error"></td></tr>
+            <tr>
+                <td></td>
+                <td><input type="checkbox" name="showp" id="showp" onchange="show()" ><label for="showp">Show Password</label></td>
+            </tr>
+            <tr>
+                <td><input type="submit" value="Register"></td>
+            </tr>
+        </table>
+        </form>
+    </body>
+    <script src="form_validation.js"></script>
+
+    <script>
+        var imageS=document.getElementById("slider");
+        var img_array=["image1.jpg","image2.jpg","image3.jpg","image4.jpg","image5.jpg"];
+        var count=0;
+        function slide()
+        {
+            imageS.setAttribute("src",img_array[count]);
+            count++;
+            if(count>=img_array.length)
+            {
+                count=0;
+            }
+        }
+        function start(){
+            imgIn= setInterval("slide()",3000);
+        }
+        function stop(){
+            clearInterval(imgIn);
+        }
+        </script>
+</html>
