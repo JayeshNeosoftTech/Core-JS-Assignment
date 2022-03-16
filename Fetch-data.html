@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Fetch data Assignment</title>
+    <meta charset="UTF-8">
+    <meta name="keywords" content="Fetch data" >
+    <meta name="author" content="jayesh">
+    <meta name="description" content="Fetch data">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <style>
+        .container{
+            margin: auto;
+            padding: auto;
+        }
+        h1,#P{
+            margin-left: 15px;
+        }
+        #posts{
+            margin: 15px;
+            background-color: rgba(137, 43, 226, 0.527);
+        }
+        #GP{
+            margin-left: 15px;
+            text-align: center;
+            width: 120px;
+            height: 40px;
+            font-size: 18px;
+            font-weight: 700;
+            color: green;
+            background-color: rgb(226, 223, 43);
+        }
+    </style>
+</head>
+<body>
+`   <div class="container">
+    <h1> Latest Posts </h1> 
+    <p id="P">Click below button for reading posts...</p>
+    <button type="button" id="GP" onclick="Get_Post()"> Get Posts </button> 
+    <div id="posts"></div>
+    </div>
+
+    <script type="text/javascript">
+        function Get_Post(){
+            const URL="https://jsonplaceholder.typicode.com/posts";
+            fetch(URL)
+            .then(res=>res.json())
+            .then(data=>{
+                const html= data
+                .map(post=>{
+                    return `<h2>${post.title}</h2><p>${post.body}</p><hr>`;
+                })
+                .join("");
+                document.querySelector('#posts').insertAdjacentHTML('afterbegin',html);
+            }) 
+            .catch(err=>{
+                console.log(err);
+            })
+        }
+    </script>
+</body>
+</html>

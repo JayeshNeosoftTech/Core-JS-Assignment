@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Fetch data in tabular format Assignment</title>
+    <meta charset="UTF-8">
+    <meta name="keywords" content="Fetch data in tabular format" >
+    <meta name="author" content="jayesh">
+    <meta name="description" content="Fetch data in tabular format">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <style>
+        .container{
+            margin: auto;
+            padding: auto;
+        }
+        h1,#P{
+            margin-left: 15px;
+        }
+        #GU{
+            margin-left: 15px;
+            text-align: center;
+            width: 120px;
+            height: 40px;
+            font-size: 18px;
+            font-weight: 700;
+            color: black;
+            background-color: skyblue;
+        }
+        table{
+            margin: 15px;
+        }
+        th{
+            background-color: rgba(0, 128, 0, 0.63);
+        }
+    </style>
+</head>
+<body>
+`   <div class="container">
+    <h1> User Details </h1> 
+    <p id="P">Click below button for user details...</p>
+    <button type="button" id="GU" onclick="Get_Users()">Get Users</button> 
+    <table id="data-table" border="1"></table>
+
+    <script type="text/javascript">    
+        function Get_Users(){
+            if(document.getElementById('data-table').rows.length==0){
+            const URL="https://jsonplaceholder.typicode.com/users";
+            fetch(URL)
+            .then(res=>res.json())
+            .then(data=>{
+                const th= `<tr><th>Sr no.</th><th>Name</th><th>Email</th>
+                            <th>Username</th><th>Phone number</th><th>Website</th></tr>`;
+                document.querySelector('#data-table').insertAdjacentHTML('afterbegin',th);
+                const html= data
+                .map(user=>{
+                    return `<tr><td>${user.id}</td><td>${user.name}</td><td>${user.email}</td>
+                        <td>${user.username}</td><td>${user.phone}</td><td>${user.website}</td></tr>`;
+                })
+                .join("");
+                document.querySelector('tr').insertAdjacentHTML('afterend',html);
+            }) 
+            .catch(err=>{
+                console.log(err);
+            })
+            }
+            else{
+                alert("User details is already fetch....");
+            }
+        }
+    </script>
+</body>
+</html>
