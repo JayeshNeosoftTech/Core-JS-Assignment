@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>To-DO List</title>
+    <meta charset="UTF-8">
+    <meta name="keywords" content="To-Do list" >
+    <meta name="author" content="jayesh">
+    <meta name="description" content="To-Do list">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <style>
+        body{background-color: rgba(228, 124, 6, 0.87);}
+        .Flex{
+            margin: auto;
+            padding: auto;
+            margin-top: 50px;
+            border: 5px solid rgb(200, 255, 0);
+            text-align: center;
+            height: fit-content;
+            width: 50%;
+        }
+        h1{
+            color: blueviolet;
+            font-size: 40px;
+            background-color: antiquewhite;
+            margin-top: 0px;
+        }
+        #Add{
+            width: 120px;
+            height: 40px;
+            font-size: 18px;
+            border-radius: 10px;
+            background-color: blueviolet;
+            color: rgb(207, 241, 241);
+            margin-top: 15px;
+            cursor: pointer;
+        }
+        input[type=text]{
+            width: 200px;
+            height: 30px;
+            font-size: 16px;
+            border-radius: 10px;
+            display: block;
+            margin: auto;
+            margin-top: 20px;
+        }
+        table{
+            border: 1px solid white;
+            margin: auto;
+            padding: auto;
+            margin-top: 20px;
+            font-size: 18px;
+            width: 80%;
+        }
+        thead{
+            background-color: rgba(2, 121, 2, 0.651);
+        }
+        input[type=button]{
+            font-size: 18px;
+            font-weight: 600;
+            width: 100%;
+            height: 35px;
+            cursor: pointer;
+        }
+        .editbtn{background-color: rgba(0, 255, 170, 0.753);}
+        #delete{background-color: rgba(255, 0, 0, 0.582);}
+    </style>
+</head>
+<body>
+    <div class="Flex">
+    
+        <h1>To-Do List</h1>
+        <input type="text" id="TS" placeholder="Enter Your Task....">
+        <input type="button" value="Add Task" id="Add" onclick="add()"/>
+        <table border="1" id="task-table">
+            <thead>
+                <tr><th>Sr no.</th><th>Tasks</th><th colspan="2">Action</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>Project-1</td>
+                    <td><input type="button" value="Edit" class="editbtn" id="1" onclick="Edit(this)"></td>
+                    <td><input type="button" value="Delete" id="delete" onclick="del(this);"></td>
+                </tr>
+            </tbody>
+        </table>
+    
+    </div>
+
+    <script type="text/javascript">
+       var edit= document.getElementById(1).value;
+       var deleteb= document.getElementById('delete').value;
+
+       const table=document.getElementById('task-table');
+       const tbody=document.getElementsByTagName('tbody');
+
+       function add(){
+        Len= table.rows.length;
+        
+        var task= document.getElementById('TS').value;
+        if(task==''){
+            alert("Please enter the task name!!!!");
+        }
+        else{
+           if(Len-1==0){
+               var tbody= document.createElement('tbody');
+               table.appendChild(tbody);
+
+               var td= document.createElement('td');
+               var tr= tbody.insertRow(0);
+               td= tr.insertCell(0);
+               td.append(Len);
+               td= tr.insertCell(1);
+               td.append(task);
+               td= tr.insertCell(2);
+               var button = document.createElement('input');
+               button.setAttribute('type', 'button');
+               button.setAttribute('value', 'Edit');
+               button.setAttribute('id', Len);
+               button.style.backgroundColor="rgba(0, 255, 170, 0.753)";
+               button.setAttribute('onclick', 'Edit(this)');
+               td.append(button);
+               td= tr.insertCell(3);
+               var button = document.createElement('input');
+               button.setAttribute('type', 'button');
+               button.setAttribute('value', 'Delete');
+               button.setAttribute('id', 'delete');
+               button.style.backgroundColor="rgba(255, 0, 0, 0.582)";
+               button.setAttribute('onclick', 'del(this)');
+               td.append(button);
+           }
+           else{
+               var td= document.createElement('td');
+               var tr= table.insertRow(Len);
+               td= tr.insertCell(0);
+               td.append(Len);
+               td= tr.insertCell(1);
+               td.append(task);
+               td= tr.insertCell(2);
+               var button = document.createElement('input');
+               button.setAttribute('type', 'button');
+               button.setAttribute('value', 'Edit');
+               button.setAttribute('id', Len);
+               button.style.backgroundColor="rgba(0, 255, 170, 0.753)";
+               button.setAttribute('onclick', 'Edit(this)');
+               td.append(button);
+               td= tr.insertCell(3);
+               var button = document.createElement('input');
+               button.setAttribute('type', 'button');
+               button.setAttribute('value', 'Delete');
+               button.setAttribute('id', 'delete');
+               button.style.backgroundColor="rgba(255, 0, 0, 0.582)";
+               button.setAttribute('onclick', 'del(this)');
+               td.append(button);
+           }
+        }
+       }
+
+       function Edit(element){
+            
+            var rowT=(element.parentNode.parentNode).rowIndex;
+            var td= table.rows[rowT].cells.item(0).innerHTML;
+            var Inval=document.getElementById(td);
+            Inval=check(Inval);
+            function check(Inval){
+                if(Inval!=null){
+                    return Inval;
+                }
+                else{
+                    var a=rowT+1;
+                    Inval=document.getElementById(a);
+                    return check(Inval);
+                }
+            }
+            if(Inval.value=='Edit'){
+            var td= table.rows[rowT].cells.item(1).innerHTML;
+            
+            const input= document.createElement('input');
+            input.setAttribute('type', 'text');
+            input.setAttribute('value', td);
+            input.setAttribute('id', 'tdtxt');
+            table.rows[rowT].cells.item(1).innerHTML="";
+            table.rows[rowT].cells.item(1).append(input);
+            Inval.setAttribute('value','Save');
+            Inval.style.backgroundColor="rgba(24, 124, 24, 0.651)";
+            }
+            else{
+                var rowT=(element.parentNode.parentNode).rowIndex;
+                var txtVal=document.getElementById('tdtxt').value;
+                table.rows[rowT].cells.item(1).innerHTML="";
+                table.rows[rowT].cells.item(1).innerHTML=txtVal;
+                Inval.setAttribute('value','Edit');
+                Inval.style.backgroundColor="rgba(0, 255, 170, 0.753)";
+            }
+        
+        }
+
+       function del(element){
+        var row = element.parentNode.parentNode;
+        if(tbody.length==0){
+               console.log("No content");
+           }
+        else{
+            table.deleteRow(row.rowIndex);
+        }
+       }
+    </script>
+</body>
+</html>
